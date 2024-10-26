@@ -1,7 +1,9 @@
-export default function Home() {
+export default function Page() {
   return (
     <main>
-      <h1>The Wild Oasis</h1>
+      <div>
+        <h1>The Wild Oasis, Welcome to paradise</h1>
+      </div>
     </main>
   );
 }

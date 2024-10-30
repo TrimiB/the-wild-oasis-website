@@ -3,6 +3,8 @@ import Navigation from '@/app/_components/Navigation';
 
 import '@/app/_styles/globals.css';
 
+import { font_Josefin_Sans } from './_fonts/fonts';
+
 export const metadata = {
   title: {
     template: '%s | The Wild Oasis',
@@ -15,7 +17,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang='en'>
-      <body className='bg-primary-950 text-primary-100 min-h-screen'>
+      <body
+        className={`${font_Josefin_Sans.className} bg-primary-950 text-primary-100 min-h-screen`}>
         <header>
           <Logo />
           <Navigation />

@@ -12,7 +12,7 @@ export const metadata = {
 
 export default function Page() {
   return (
-    <>
+    <div className='mt-24'>
       <Image
         src={bg}
         alt='Mountains and forests with two cabins'
@@ -32,6 +32,6 @@ export default function Page() {
           Explore luxury cabins
         </Link>
       </div>
-    </>
+    </div>
   );
 }

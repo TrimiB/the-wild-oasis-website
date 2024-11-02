@@ -1,3 +1,14 @@
 {
-  "extends": ["next/babel", "next/core-web-vitals"]
+  "extends": [
+    "next/babel",
+    "next/core-web-vitals",
+    "plugin:promise/recommended"
+  ],
+  "plugins": ["promise"],
+  "rules": {
+    "promise/always-return": "error",
+    "promise/no-return-wrap": "error",
+    "promise/no-return-await": "error",
+    "promise/async-suffix": "error"
+  }
 }

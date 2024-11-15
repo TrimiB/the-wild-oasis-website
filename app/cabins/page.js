@@ -1,15 +1,16 @@
 import { Suspense } from 'react';
 import CabinList from '../_components/CabinList';
 import Spinner from '../_components/Spinner';
+import Filter from '../_components/Filter';
 
-export const revalidate = 3600; // 1 hour in seconds
+// export const revalidate = 3600; // 1 hour in seconds
 
 export const metadata = {
   title: 'Cabins',
 };
 
-export default function Page() {
-  // CHANGE
+export default function Page({ searchParams }) {
+  const filter = searchParams?.capacity ?? 'all';
 
   return (
     <div>
@@ -25,8 +26,14 @@ export default function Page() {
         to paradise.
       </p>
 
-      <Suspense fallback={<Spinner />}>
-        <CabinList />
+      <div className='mb-8 flex justify-end'>
+        <Filter />
+      </div>
+
+      <Suspense
+        fallback={<Spinner />}
+        key={filter}>
+        <CabinList filter={filter} />
       </Suspense>
     </div>
   );

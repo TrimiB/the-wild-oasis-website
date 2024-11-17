@@ -32,9 +32,12 @@
 
 /* For data picker */
 
-.rdp {
-  --rdp-cell-size: 32px !important;
+.rdp-root {
+  --rdp-day-height: 2rem !important;
+  --rdp-day-width: 2rem !important;
+  --rdp-cell-size: 2rem !important;
   --rdp-accent-color: theme('colors.accent.500') !important;
   --rdp-background-color: theme('colors.accent.600') !important;
+  --rdp-range_middle-background-color: theme('colors.accent.600') !important;
   margin: 0 !important;
 }

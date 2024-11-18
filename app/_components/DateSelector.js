@@ -26,7 +26,7 @@ function DateSelector({ bookedDates, settings, cabin }) {
   const twelthMonth = 12;
 
   // SETTINGS
-  const { minBookingLength, maxBookingLength } = settings;
+  const { minBookingLength, maxBookingLength } = settings || {};
 
   return (
     <div className='flex flex-col justify-between'>

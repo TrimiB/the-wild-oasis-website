@@ -13,6 +13,9 @@ export const {
       return !!auth;
     },
   },
+  pages: {
+    signIn: '/login',
+  },
 });
 
 // export const {

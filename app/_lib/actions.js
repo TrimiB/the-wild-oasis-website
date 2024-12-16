@@ -1,9 +1,10 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { permanentRedirect } from 'next/navigation';
+import { permanentRedirect, redirect } from 'next/navigation';
 import { auth, signIn, signOut } from './auth';
 import {
+  createBooking,
   deleteBooking,
   getBookings,
   updateBooking,
@@ -47,6 +48,47 @@ export async function updateProfileAction(formData) {
   revalidatePath('/account/profile');
 }
 
+export async function createReservationAction(
+  reservationData,
+  bookedDates,
+  formData
+) {
+  const session = await auth();
+  if (!session)
+    throw new Error('AUTH_ERROR: User must be logged in to update reservation');
+
+  if (!reservationData.numNights)
+    throw new Error(
+      'Reservation must have a duration. Please select a range of dates.'
+    );
+
+  if (
+    bookedDates.some(
+      (date) =>
+        date.startDate <= reservationData.startDate &&
+        date.endDate >= reservationData.endDate
+    )
+  ) {
+    throw new Error('One or more of the selected dates are already booked');
+  }
+
+  const newBookingData = {
+    ...reservationData,
+    guestId: session.user.guestId,
+    numGuests: +formData.get('numGuests'),
+    observations: formData.get('observations').slice(0, 1000),
+    extrasPrice: 0,
+    totalPrice: reservationData.cabinPrice,
+    hasBreakfast: false,
+    isPaid: false,
+    status: 'unconfirmed',
+  };
+
+  await createBooking(newBookingData);
+  revalidatePath(`/cabins/${reservationData.cabinId}`);
+  redirect('/cabins/thankyou');
+}
+
 export async function updateReservationAction(formData) {
   console.log(formData);
   const numGuests = formData.get('numGuests');
@@ -80,7 +122,8 @@ export async function updateReservationAction(formData) {
 
 export async function DeleteReservationAction(bookingId) {
   const session = await auth();
-  if (!session) throw new Error('You must be logged in to update your profile');
+  if (!session)
+    throw new Error('AUTH_ERROR: User must be logged in to update reservation');
 
   const guestBookings = await getBookings(session.user.guestId);
   const booking = guestBookings.find((booking) => booking.id === bookingId);

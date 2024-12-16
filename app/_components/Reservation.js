@@ -23,6 +23,7 @@ async function Reservation({ cabin }) {
         <ReservationForm
           cabin={cabin}
           user={session.user}
+          bookedDates={bookedDates}
         />
       ) : (
         <LoginMessage />
